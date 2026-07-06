@@ -20,7 +20,7 @@ def deployToRemoteServer(imageName, serverHost, appPort, containerName, sshCrede
     }
     
     echo "Application deployed successfully to remote server!"
-    echo "Backend accessible at: http://${serverHost}:${appPort}"
+    echo "API accessible at: http://${serverHost}:${appPort}"
 }
 
 // Test SSH connectivity
@@ -107,16 +107,16 @@ node {
     // Configuration variables
     def registryName = "nmthai"
     def imageTag = "${BUILD_NUMBER}"
-    def imageName = "${registryName}/cowsay-backend:${imageTag}"
+    def imageName = "${registryName}/cowsay-api:${imageTag}"
     def serverHost = "23.23.218.118"
     def appPort = "3000"
-    def containerName = "cowsay-Backend"
+    def containerName = "cowsay-api"
     def sshCredentialsId = "SERVER_SSH_KEY"
     
     stage('Checkout') {
         // Updated to use your forked repository
         // Replace 'your-github-username' with your actual GitHub username
-        git url: 'https://github.com/thai-nm/devops-project-application-cowsay-Backend', branch: 'main'
+        git url: 'https://github.com/thai-nm/devops-project-application-cowsay-api', branch: 'main'
     }
     
     stage('Build') {
@@ -143,7 +143,7 @@ node {
         sh "docker build -t ${imageName} ."
         
         // Also tag as latest for convenience
-        sh "docker tag ${imageName} ${registryName}/cowsay-Backend:latest"
+        sh "docker tag ${imageName} ${registryName}/cowsay-api:latest"
         
         echo "Docker image built successfully with tag: ${imageTag}"
     }
@@ -157,7 +157,7 @@ node {
             sh "docker push ${imageName}"
             
             // Push latest tag
-            sh "docker push ${registryName}/cowsay-Backend:latest"
+            sh "docker push ${registryName}/cowsay-api:latest"
         }
         echo "Docker image pushed successfully with build number: ${BUILD_NUMBER}"
     }
