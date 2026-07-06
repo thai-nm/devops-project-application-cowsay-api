@@ -109,7 +109,7 @@ node {
     def imageTag = "${BUILD_NUMBER}"
     def imageName = "${registryName}/cowsay-api:${imageTag}"
     def serverHost = "23.23.218.118"
-    def appPort = "3000"
+    def appPort = "3001"
     def containerName = "cowsay-api"
     def sshCredentialsId = "SERVER_SSH_KEY"
     
